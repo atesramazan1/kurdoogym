@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KURDOO GYM</title>
+    <style>
+        :root {
+            --primary: #00e676; /* Neon Yeşil */
+            --bg: #000000;
+            --card-bg: #111;
+            --text: #ffffff;
+            --accent: #2979ff; /* Mavi */
+            --warning: #ffea00; /* Sarı */
+            --rest: #ff9100; /* Turuncu - Dinlenme */
+        }
+
+        * {
+            box-sizing: border-box; /* Mobil taşmaları önler */
+            -webkit-tap-highlight-color: transparent; /* Mobildeki mavi tıklama efektini gizler */
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px; /* Telefon ekranı odaklı max genişlik */
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        h1 { 
+            text-align: center; 
+            border-bottom: 2px solid var(--primary); 
+            padding-bottom: 10px; 
+            color: #fff; 
+            letter-spacing: 2px;
+            font-style: italic;
+            font-size: 28px;
+            margin-top: 10px;
+        }
+        
+        h1 span {
+            color: var(--primary);
+            font-weight: 900;
+        }
+        
+        h2 { 
+            color: var(--primary); 
+            border-left: 5px solid var(--primary); 
+            padding-left: 10px; 
+            background: linear-gradient(90deg, #111, transparent);
+            padding-top: 8px;
+            padding-bottom: 8px;
+            margin-top: 15px; 
+            font-size: 18px;
+        }
+
+        /* --- ANTRENMAN (Accordion) --- */
+        .accordion { margin-top: 15px; }
+        .day-btn {
+            background-color: #222; color: #fff; cursor: pointer; padding: 18px 15px;
+            width: 100%; text-align: left; border: none; outline: none; transition: 0.3s;
+            font-size: 16px; font-weight: bold; border-bottom: 1px solid #333;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .day-btn:first-child { border-top-left-radius: 12px; border-top-right-radius: 12px; }
+        .day-btn:last-child { border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+        .active-day { background-color: #333; color: var(--primary); border-radius: 0; }
+        
+        .panel {
+            padding: 0 10px; background-color: #0a0a0a; max-height: 0; overflow: hidden;
+            transition: max-height 0.3s ease-out; border-left: 2px solid var(--primary);
+        }
+
+        .exercise-card {
+            background: #181818; margin: 12px 0; padding: 15px; border-radius: 10px;
+            position: relative; border: 1px solid #2a2a2a; 
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .ex-name { 
+            font-weight: 900; 
+            font-size: 16px; 
+            color: #fff; 
+            flex: 1;
+            padding-right: 10px;
+        }
+
+        .gif-link {
+            background: #222; color: var(--primary); font-size: 12px; font-weight: bold;
+            padding: 5px 10px; border-radius: 6px; text-decoration: none; border: 1px solid #444;
+            display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;
+        }
+        .gif-link:active { background: #333; }
+
+        .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+        .tag { background: #000; padding: 5px 8px; border-radius: 6px; font-size: 12px; color: #ccc; border: 1px solid #333; font-weight: 600;}
+        .tag.heavy { color: #ff5252; border-color: #500; background: #1a0000; }
+        .tag.rest { color: var(--rest); border-color: #663a00; background: #1a0e00; }
+
+        /* --- KİLO GİRİŞ BÖLÜMÜ (Mobil Uyumlu) --- */
+        .weight-tracker {
+            background: #111;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #333;
+        }
+        
+        .weight-label {
+            font-size: 14px;
+            color: #aaa;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .weight-tracker input {
+            background: #000;
+            border: 2px solid #444;
+            color: var(--primary);
+            padding: 10px;
+            border-radius: 8px;
+            width: 80px; /* Mobilde parmakla basması daha kolay */
+            text-align: center;
+            font-size: 18px;
+            font-weight: 900;
+        }
+        
+        .weight-tracker input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .save-indicator {
+            font-size: 12px;
+            color: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: bold;
+            position: absolute;
+            right: 15px;
+            bottom: -20px;
+        }
+
+        /* İpuçları Kutusu */
+        .tips-box {
+            background: #1a1a00; border: 1px solid #ffd700; padding: 15px; 
+            border-radius: 12px; margin-top: 30px; font-size: 13px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>KURDOO <span>GYM</span></h1>
+
+    <h2>PROGRAM (5 GÜN / 12 HAREKET)</h2>
+    <div class="accordion" id="workoutList">
+        </div>
+
+    <div class="tips-box">
+        <strong style="color:#ffd700;">🔥 KURDOO GYM İPUÇLARI:</strong>
+        <ul style="margin-top:8px; padding-left:20px; color:#ddd; margin-bottom: 0;">
+            <li style="margin-bottom: 5px;"><strong>Kalıcı Hafıza:</strong> Girdiğin kilolar telefonunda kalır. Uygulamayı kapatsan da silinmez.</li>
+            <li style="margin-bottom: 5px;"><strong>Pump:</strong> İdmandan 30dk önce yarım çay kaşığı kaya tuzu tüket.</li>
+            <li style="margin-bottom: 5px;"><strong>Son Tekrar:</strong> Belirtilen tekrara ulaştığında kasın tükenmiş olmalı. Kilonu ona göre seç.</li>
+        </ul>
+    </div>
+
+    <div style="text-align:center; margin-top:40px; color:#555; font-size:12px; font-weight: bold;">
+        KURDOO GYM MOBILE SYSTEM V1.0
+    </div>
+</div>
+
+<script>
+    // --- ANTRENMAN DATASI ---
+    const workouts = [
+        {
+            day: "1. GÜN: GÖĞÜS & ÖN KOL",
+            exercises: [
+                {n: "Incline Barbell Bench Press", s:4, r:"8-10", l:"%80", t:"Üst Göğüs", rest:"90s"},
+                {n: "Flat Dumbbell Press", s:4, r:"10-12", l:"%75", t:"Kütle", rest:"90s"},
+                {n: "Cable Crossover", s:3, r:"15", l:"%60", t:"Alt Çizgi", rest:"60s"},
+                {n: "Machine Chest Press", s:3, r:"12", l:"%70", t:"İzolasyon", rest:"60s"},
+                {n: "Pec Deck Fly", s:3, r:"15", l:"%50", t:"Sıkıştırma", rest:"60s"},
+                {n: "Dumbbell Pullover", s:3, r:"12", l:"%65", t:"Genişleme", rest:"60s"},
+                {n: "Z-Bar Skullcrushers", s:4, r:"10", l:"%75", t:"Triceps", rest:"90s"},
+                {n: "Rope Pushdown", s:4, r:"15", l:"%60", t:"Dış Baş", rest:"60s"},
+                {n: "Overhead Ext", s:3, r:"12", l:"%70", t:"Uzun Baş", rest:"60s"},
+                {n: "Bench Dips", s:3, r:"Max", l:"Vücut", t:"Bitiriş", rest:"45s"},
+                {n: "Leg Raise", s:4, r:"15", l:"-", t:"Karın", rest:"45s"},
+                {n: "Plank", s:3, r:"60sn", l:"-", t:"Core", rest:"45s"}
+            ]
+        },
+        {
+            day: "2. GÜN: SIRT & ARKA KOL",
+            exercises: [
+                {n: "Pull Ups", s:4, r:"Max", l:"Vücut", t:"Genişlik", rest:"120s"},
+                {n: "Barbell Row", s:4, r:"8-10", l:"%85", t:"Kalınlık", rest:"120s"},
+                {n: "Lat Pulldown", s:4, r:"12", l:"%75", t:"Kanat", rest:"90s"},
+                {n: "Seated Row", s:3, r:"12", l:"%75", t:"Orta Sırt", rest:"90s"},
+                {n: "Straight Arm Pulldown", s:3, r:"15", l:"%60", t:"Detay", rest:"60s"},
+                {n: "Face Pulls", s:4, r:"15", l:"%50", t:"Arka Omuz", rest:"60s"},
+                {n: "Shrugs", s:4, r:"12", l:"%90", t:"Trapez", rest:"60s"},
+                {n: "Barbell Curl", s:4, r:"8-10", l:"%80", t:"Biceps", rest:"90s"},
+                {n: "Hammer Curl", s:3, r:"12", l:"%70", t:"Brachialis", rest:"60s"},
+                {n: "Preacher Curl", s:3, r:"12", l:"%65", t:"Peak", rest:"60s"},
+                {n: "Concentration Curl", s:3, r:"15", l:"%50", t:"Pump", rest:"45s"},
+                {n: "Hyperextension", s:3, r:"15", l:"Vücut", t:"Bel", rest:"60s"}
+            ]
+        },
+        {
+            day: "3. GÜN: BACAK (LEG DAY)",
+            exercises: [
+                {n: "Squat", s:4, r:"6-8", l:"%85", t:"Tüm Bacak", rest:"150s"},
+                {n: "Leg Press", s:4, r:"10-12", l:"%80", t:"Hacim", rest:"120s"},
+                {n: "RDL (Deadlift)", s:4, r:"10", l:"%75", t:"Arka Bacak", rest:"120s"},
+                {n: "Walking Lunges", s:3, r:"20", l:"Dumb", t:"Kalça", rest:"90s"},
+                {n: "Leg Extension", s:4, r:"15", l:"%65", t:"Ön Bacak", rest:"60s"},
+                {n: "Leg Curl", s:4, r:"15", l:"%65", t:"Arka Bacak", rest:"60s"},
+                {n: "Bulgarian Split", s:3, r:"10", l:"Zor", t:"Güç", rest:"90s"},
+                {n: "Goblet Squat", s:3, r:"15", l:"Orta", t:"İç Bacak", rest:"90s"},
+                {n: "Calf Raise (Ayakta)", s:5, r:"15", l:"Ağır", t:"Kalf", rest:"60s"},
+                {n: "Calf Raise (Oturarak)", s:4, r:"20", l:"Orta", t:"Soleus", rest:"60s"},
+                {n: "Cable Crunch", s:4, r:"15", l:"Ağır", t:"Karın", rest:"45s"},
+                {n: "Russian Twist", s:3, r:"20", l:"Plaka", t:"Yanlar", rest:"45s"}
+            ]
+        },
+        {
+            day: "4. GÜN: OMUZ & KOLLAR",
+            exercises: [
+                {n: "Overhead Press", s:4, r:"8", l:"%80", t:"Omuz", rest:"120s"},
+                {n: "Dumbbell Press", s:3, r:"10", l:"%75", t:"Hacim", rest:"90s"},
+                {n: "Lateral Raise", s:5, r:"15-20", l:"%50", t:"Genişlik", rest:"60s"},
+                {n: "Front Raise", s:3, r:"12", l:"%60", t:"Ön Omuz", rest:"60s"},
+                {n: "Reverse Fly", s:4, r:"15", l:"%60", t:"Arka Omuz", rest:"60s"},
+                {n: "Upright Row", s:3, r:"12", l:"%70", t:"Trapez", rest:"90s"},
+                {n: "Close Grip Bench", s:3, r:"10", l:"%75", t:"Triceps", rest:"90s"},
+                {n: "Incline Curl", s:3, r:"12", l:"%65", t:"Biceps", rest:"60s"},
+                {n: "Rope Hammer", s:3, r:"15", l:"%60", t:"Ön Kol", rest:"60s"},
+                {n: "Triceps Kickback", s:3, r:"15", l:"Hafif", t:"İzole", rest:"45s"},
+                {n: "Wrist Curl", s:4, r:"20", l:"Bar", t:"Bilek", rest:"45s"},
+                {n: "Farmers Walk", s:3, r:"60sn", l:"Ağır", t:"Tutuş", rest:"90s"}
+            ]
+        },
+        {
+            day: "5. GÜN: FULL BODY & EKSİKLER",
+            exercises: [
+                {n: "Deadlift", s:3, r:"5", l:"%90", t:"Güç", rest:"180s"},
+                {n: "Incline DB Press", s:3, r:"10", l:"%75", t:"Üst Göğüs", rest:"90s"},
+                {n: "T-Bar Row", s:3, r:"10", l:"%80", t:"Sırt", rest:"90s"},
+                {n: "Arnold Press", s:3, r:"12", l:"%70", t:"Omuz", rest:"90s"},
+                {n: "Leg Press (Dar)", s:3, r:"15", l:"%70", t:"Dış Bacak", rest:"90s"},
+                {n: "Cable Lateral", s:4, r:"15", l:"%50", t:"Tek Kol", rest:"45s"},
+                {n: "Chin Ups", s:3, r:"Max", l:"Vücut", t:"Biceps", rest:"90s"},
+                {n: "Dips", s:3, r:"Max", l:"Vücut", t:"Göğüs", rest:"90s"},
+                {n: "Woodchoppers", s:3, r:"15", l:"%60", t:"Oblik", rest:"60s"},
+                {n: "Box Jumps", s:3, r:"10", l:"-", t:"Patlayıcı", rest:"60s"},
+                {n: "Burpees", s:3, r:"15", l:"-", t:"Kardiyo", rest:"60s"},
+                {n: "Stretching", s:1, r:"10dk", l:"-", t:"Esneme", rest:"-"}
+            ]
+        }
+    ];
+
+    // --- KİLO KAYDETME FONKSİYONU ---
+    window.saveWeight = function(id) {
+        const inputField = document.getElementById(id);
+        const statusText = document.getElementById('status-' + id);
+        
+        localStorage.setItem(id, inputField.value);
+        
+        statusText.style.opacity = 1;
+        setTimeout(() => {
+            statusText.style.opacity = 0;
+        }, 1500);
+    };
+
+    // --- ARAYÜZ OLUŞTURMA ---
+    const container = document.getElementById('workoutList');
+    workouts.forEach((d, dayIndex) => {
+        const btn = document.createElement('button');
+        btn.className = 'day-btn';
+        btn.innerHTML = `<span>${d.day}</span><span style="font-size:20px;">+</span>`;
+        
+        const pnl = document.createElement('div');
+        pnl.className = 'panel';
+
+        d.exercises.forEach((e, exIndex) => {
+            const uniqueId = `kurdoo-day${dayIndex}-ex${exIndex}`;
+            const savedWeight = localStorage.getItem(uniqueId) || "";
+
+            const card = document.createElement('div');
+            card.className = 'exercise-card';
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="ex-name">${e.n}</div>
+                    <a href="https://www.google.com/search?tbm=isch&q=${e.n.replace(/ /g, '+')}+exercise+gif" target="_blank" class="gif-link">▶ Görsel</a>
+                </div>
+                
+                <div class="tags">
+                    <span class="tag">Set: ${e.s}</span>
+                    <span class="tag">Tekrar: ${e.r}</span>
+                    <span class="tag heavy">Yük: ${e.l}</span>
+                    <span class="tag rest">⏱️ ${e.rest}</span>
+                </div>
+                
+                <div class="weight-tracker">
+                    <span class="weight-label">⚖️ Ağırlık:</span>
+                    <div class="input-group" style="position:relative;">
+                        <input type="number" inputmode="decimal" id="${uniqueId}" value="${savedWeight}" placeholder="KG" oninput="saveWeight('${uniqueId}')">
+                        <span class="save-indicator" id="status-${uniqueId}">✓ Kaydedildi</span>
+                    </div>
+                </div>
+            `;
+            pnl.appendChild(card);
+        });
+
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active-day');
+            this.children[1].innerText = this.classList.contains('active-day') ? '−' : '+';
+            
+            if(pnl.style.maxHeight) { 
+                pnl.style.maxHeight = null; 
+            } else { 
+                document.querySelectorAll('.panel').forEach(p => p.style.maxHeight = null);
+                document.querySelectorAll('.day-btn').forEach(b => {
+                    if(b !== this) { b.classList.remove('active-day'); b.children[1].innerText = '+'; }
+                });
+                // Mobilde içerik uzayabileceği için dinamik yükseklik ayarı
+                pnl.style.maxHeight = pnl.scrollHeight + 50 + "px"; 
+            }
+        });
+
+        container.appendChild(btn);
+        container.appendChild(pnl);
+    });
+</script>
+
+</body>
+</html>
