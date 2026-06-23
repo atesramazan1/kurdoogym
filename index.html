@@ -27,18 +27,10 @@
 
     <div class="max-w-md mx-auto min-h-screen flex flex-col bg-white dark:bg-zinc-800 shadow-2xl relative pb-[80px]">
         
-        <header class="p-4 border-b border-gray-100 dark:border-zinc-700 flex justify-between items-center sticky top-0 bg-white/90 dark:bg-zinc-800/90 backdrop-blur-md z-40">
-            <h1 class="text-xl font-bold tracking-tight text-blue-600 dark:text-blue-400">VocabApp</h1>
-            <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 text-xl transition">🌙</button>
-        </header>
 
         <main class="flex-1 p-4 overflow-y-auto">
             
             <section id="screen-dashboard" class="space-y-6">
-                <div>
-                    <h2 class="text-2xl font-bold">Selam 👋</h2>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">Günlük hedeflerine doğru ilerle.</p>
-                </div>
                 <div class="bg-blue-50 dark:bg-blue-900/30 p-5 rounded-2xl">
                     <div class="flex justify-between text-sm font-semibold text-blue-600 dark:text-blue-400 mb-2">
                         <span>Öğrenme İlerlemen</span>
@@ -681,17 +673,341 @@
         }
 
         // --- YARDIMCILAR ---
-        function loadMockData() {
-            words = [
-                { id: 1, english: "Explore", turkish: "Keşfetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
-                { id: 2, english: "Journey", turkish: "Yolculuk", wordType: "Noun", level: "A2", isFavorite: true, reviewStage: 0, nextReviewDate: new Date().toISOString() },
-                { id: 3, english: "Quickly", turkish: "Hızlıca", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
-                { id: 4, english: "Beautiful", turkish: "Güzel", wordType: "Adjective", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
-                { id: 5, english: "Maintain", turkish: "Bakımını yapmak", wordType: "Verb", level: "B1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() }
-            ];
-            initApp();
-            alert('A1-B1 Örnek kelimeler başarıyla yüklendi!');
-        }
+function loadMockData() {
+    words = [
+        { id: 1, english: "Accept", turkish: "Kabul etmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 2, english: "Refuse", turkish: "Reddetmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 3, english: "Answer", turkish: "Cevap vermek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 4, english: "Ask", turkish: "Sormak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 5, english: "Believe", turkish: "İnanmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 6, english: "Borrow", turkish: "Ödünç almak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 7, english: "Bring", turkish: "Getirmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 8, english: "Build", turkish: "İnşa etmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 9, english: "Buy", turkish: "Satın almak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 10, english: "Call", turkish: "Aramak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 11, english: "Carry", turkish: "Taşımak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 12, english: "Catch", turkish: "Yakalamak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 13, english: "Choose", turkish: "Seçmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 14, english: "Clean", turkish: "Temizlemek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 15, english: "Close", turkish: "Kapatmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 16, english: "Cook", turkish: "Yemek pişirmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 17, english: "Cut", turkish: "Kesmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 18, english: "Dance", turkish: "Dans etmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 19, english: "Decide", turkish: "Karar vermek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 20, english: "Describe", turkish: "Tanımlamak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 21, english: "Die", turkish: "Ölmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 22, english: "Draw", turkish: "Çizmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 23, english: "Drink", turkish: "İçmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 24, english: "Drive", turkish: "Sürmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 25, english: "Eat", turkish: "Yemek yemek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 26, english: "Enjoy", turkish: "Keyif almak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 27, english: "Explain", turkish: "Açıklamak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 28, english: "Fall", turkish: "Düşmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 29, english: "Feel", turkish: "Hissetmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 30, english: "Find", turkish: "Bulmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 31, english: "Finish", turkish: "Bitirmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 32, english: "Follow", turkish: "Takip etmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 33, english: "Forget", turkish: "Unutmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 34, english: "Get", turkish: "Almak / edinmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 35, english: "Give", turkish: "Vermek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 36, english: "Go", turkish: "Gitmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 37, english: "Grow", turkish: "Büyümek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 38, english: "Happen", turkish: "Olmak / gerçekleşmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 39, english: "Have", turkish: "Sahip olmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 40, english: "Hear", turkish: "Duymak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 41, english: "Help", turkish: "Yardım etmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 42, english: "Hope", turkish: "Umut etmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 43, english: "Hurry", turkish: "Acele etmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 44, english: "Keep", turkish: "Saklamak / tutmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 45, english: "Know", turkish: "Bilmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 46, english: "Learn", turkish: "Öğrenmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 47, english: "Leave", turkish: "Ayrılmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 48, english: "Like", turkish: "Sevmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 49, english: "Live", turkish: "Yaşamak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 50, english: "Look", turkish: "Bakmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 51, english: "Love", turkish: "Sevmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 52, english: "Make", turkish: "Yapmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 53, english: "Meet", turkish: "Tanışmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 54, english: "Move", turkish: "Hareket etmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 55, english: "Need", turkish: "İhtiyacı olmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 56, english: "Open", turkish: "Açmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 57, english: "Pay", turkish: "Ödemek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 58, english: "Play", turkish: "Oynamak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 59, english: "Put", turkish: "Koymak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 60, english: "Read", turkish: "Okumak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 61, english: "Remember", turkish: "Hatırlamak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 62, english: "Run", turkish: "Koşmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 63, english: "Say", turkish: "Söylemek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 64, english: "See", turkish: "Görmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 65, english: "Sell", turkish: "Satmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 66, english: "Send", turkish: "Göndermek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 67, english: "Show", turkish: "Göstermek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 68, english: "Sit", turkish: "Oturmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 69, english: "Sleep", turkish: "Uyumak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 70, english: "Speak", turkish: "Konuşmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 71, english: "Stand", turkish: "Ayakta durmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 72, english: "Start", turkish: "Başlamak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 73, english: "Stop", turkish: "Durmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 74, english: "Study", turkish: "Çalışmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 75, english: "Take", turkish: "Almak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 76, english: "Talk", turkish: "Konuşmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 77, english: "Think", turkish: "Düşünmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 78, english: "Travel", turkish: "Seyahat etmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 79, english: "Try", turkish: "Denemek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 80, english: "Turn", turkish: "Dönmek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 81, english: "Understand", turkish: "Anlamak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 82, english: "Use", turkish: "Kullanmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 83, english: "Wait", turkish: "Beklemek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 84, english: "Walk", turkish: "Yürümek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 85, english: "Want", turkish: "İstemek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 86, english: "Watch", turkish: "İzlemek", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 87, english: "Win", turkish: "Kazanmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 88, english: "Work", turkish: "Çalışmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 89, english: "Write", turkish: "Yazmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 90, english: "Arrive", turkish: "Varmak", wordType: "Verb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 91, english: "Early", turkish: "Erken", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 92, english: "Late", turkish: "Geç", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 93, english: "Always", turkish: "Her zaman", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 94, english: "Never", turkish: "Asla", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 95, english: "Sometimes", turkish: "Bazen", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+        { id: 96, english: "Here", turkish: "Burada", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 97, english: "There", turkish: "Orada", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 98, english: "Now", turkish: "Şimdi", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 99, english: "Today", turkish: "Bugün", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+        { id: 100, english: "Tomorrow", turkish: "Yarın", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() }
+    ];
+        // A2 WORDS PART 1 (101 - 200)
+
+{ id: 101, english: "Achieve", turkish: "Başarmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 102, english: "Advertise", turkish: "Reklam yapmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 103, english: "Allow", turkish: "İzin vermek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 104, english: "Appear", turkish: "Görünmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 105, english: "Argue", turkish: "Tartışmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 106, english: "Arrange", turkish: "Düzenlemek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 107, english: "Avoid", turkish: "Kaçınmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 108, english: "Behave", turkish: "Davranmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 109, english: "Belong", turkish: "Ait olmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 110, english: "Cancel", turkish: "İptal etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 111, english: "Care", turkish: "Önem vermek / ilgilenmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 112, english: "Compare", turkish: "Karşılaştırmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 113, english: "Complain", turkish: "Şikayet etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 114, english: "Complete", turkish: "Tamamlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 115, english: "Contain", turkish: "İçermek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 116, english: "Continue", turkish: "Devam etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 117, english: "Control", turkish: "Kontrol etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 118, english: "Cost", turkish: "Maliyeti olmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 119, english: "Create", turkish: "Yaratmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 120, english: "Depend", turkish: "Bağlı olmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 121, english: "Destroy", turkish: "Yok etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 122, english: "Develop", turkish: "Geliştirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 123, english: "Discuss", turkish: "Tartışmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 124, english: "Earn", turkish: "Kazanmak (para)", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 125, english: "Educate", turkish: "Eğitmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 126, english: "Employ", turkish: "İstihdam etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 127, english: "Encourage", turkish: "Cesaretlendirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 128, english: "Enter", turkish: "Girmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 129, english: "Escape", turkish: "Kaçmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 130, english: "Examine", turkish: "İncelemek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 131, english: "Exist", turkish: "Var olmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 132, english: "Expect", turkish: "Beklemek (ummak)", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 133, english: "Explain", turkish: "Açıklamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 134, english: "Express", turkish: "İfade etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 135, english: "Fail", turkish: "Başarısız olmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 136, english: "Fix", turkish: "Tamir etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 137, english: "Force", turkish: "Zorlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 138, english: "Gain", turkish: "Kazanmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 139, english: "Hate", turkish: "Nefret etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 140, english: "Hold", turkish: "Tutmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 141, english: "Include", turkish: "İçermek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 142, english: "Increase", turkish: "Artmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 143, english: "Inform", turkish: "Bilgilendirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 144, english: "Invite", turkish: "Davet etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 145, english: "Join", turkish: "Katılmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 146, english: "Kill", turkish: "Öldürmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 147, english: "Lead", turkish: "Yönetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 148, english: "Lie", turkish: "Yalan söylemek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 149, english: "Lose", turkish: "Kaybetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 150, english: "Manage", turkish: "Yönetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+// A2 WORDS PART 2 (151 - 230)
+
+{ id: 151, english: "Match", turkish: "Eşleştirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 152, english: "Mention", turkish: "Bahsetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 153, english: "Miss", turkish: "Kaçırmak / özlemek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 154, english: "Mix", turkish: "Karıştırmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 155, english: "Move", turkish: "Taşınmak / hareket etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 156, english: "Notice", turkish: "Fark etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 157, english: "Offer", turkish: "Teklif etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 158, english: "Organize", turkish: "Organize etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 159, english: "Own", turkish: "Sahip olmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 160, english: "Pass", turkish: "Geçmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 161, english: "Perform", turkish: "Sahnelemek / yapmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 162, english: "Plan", turkish: "Planlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 163, english: "Prefer", turkish: "Tercih etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 164, english: "Prepare", turkish: "Hazırlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 165, english: "Prevent", turkish: "Engellemek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 166, english: "Produce", turkish: "Üretmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 167, english: "Protect", turkish: "Korumak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 168, english: "Provide", turkish: "Sağlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 169, english: "Reach", turkish: "Ulaşmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 170, english: "Realize", turkish: "Farkına varmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 171, english: "Receive", turkish: "Almak (teslim)", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 172, english: "Reduce", turkish: "Azaltmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 173, english: "Refuse", turkish: "Reddetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 174, english: "Regret", turkish: "Pişman olmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 175, english: "Relate", turkish: "İlişkilendirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 176, english: "Remain", turkish: "Kalmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 177, english: "Remove", turkish: "Kaldırmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 178, english: "Repair", turkish: "Tamir etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 179, english: "Repeat", turkish: "Tekrarlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 180, english: "Reply", turkish: "Cevap vermek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 181, english: "Report", turkish: "Rapor etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 182, english: "Respect", turkish: "Saygı duymak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 183, english: "Rest", turkish: "Dinlenmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 184, english: "Result", turkish: "Sonuçlanmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 185, english: "Return", turkish: "Geri dönmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 186, english: "Save", turkish: "Kaydetmek / kurtarmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 187, english: "Search", turkish: "Aramak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 188, english: "Serve", turkish: "Hizmet etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 189, english: "Share", turkish: "Paylaşmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 190, english: "Shout", turkish: "Bağırmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 191, english: "Smile", turkish: "Gülümsemek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 192, english: "Solve", turkish: "Çözmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 193, english: "Spend", turkish: "Harcamak / vakit geçirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 194, english: "Spread", turkish: "Yaymak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 195, english: "Steal", turkish: "Çalmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 196, english: "Succeed", turkish: "Başarmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 197, english: "Suggest", turkish: "Önermek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 198, english: "Survive", turkish: "Hayatta kalmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 199, english: "Teach", turkish: "Öğretmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 200, english: "Throw", turkish: "Atmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+// A2 WORDS PART 3 (231 - 300)
+
+{ id: 231, english: "Absorb", turkish: "Emmek / absorbe etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 232, english: "Adjust", turkish: "Ayarlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 233, english: "Admire", turkish: "Hayran olmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 234, english: "Admit", turkish: "Kabul etmek (itiraf)", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 235, english: "Afford", turkish: "Parası yetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 236, english: "Agree", turkish: "Katılmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 237, english: "Announce", turkish: "Duyurmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 238, english: "Apologize", turkish: "Özür dilemek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 239, english: "Appreciate", turkish: "Takdir etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 240, english: "Approach", turkish: "Yaklaşmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 241, english: "Attend", turkish: "Katılmak (resmi)", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 242, english: "Attract", turkish: "Cezbetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 243, english: "Base", turkish: "Temel almak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 244, english: "Behave", turkish: "Davranmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 245, english: "Benefit", turkish: "Fayda sağlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 246, english: "Blame", turkish: "Suçlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 247, english: "Calculate", turkish: "Hesaplamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 248, english: "Challenge", turkish: "Meydan okumak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 249, english: "Charge", turkish: "Ücretlendirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 250, english: "Check", turkish: "Kontrol etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 251, english: "Claim", turkish: "İddia etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 252, english: "Collect", turkish: "Toplamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 253, english: "Combine", turkish: "Birleştirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 254, english: "Comfort", turkish: "Rahatlatmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 255, english: "Communicate", turkish: "İletişim kurmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 256, english: "Compete", turkish: "Yarışmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 257, english: "Concentrate", turkish: "Konsantre olmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 258, english: "Consider", turkish: "Düşünmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 259, english: "Consist", turkish: "Oluşmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 260, english: "Consult", turkish: "Danışmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 261, english: "Consume", turkish: "Tüketmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 262, english: "Contact", turkish: "İletişime geçmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 263, english: "Contribute", turkish: "Katkıda bulunmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 264, english: "Convert", turkish: "Dönüştürmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 265, english: "Convince", turkish: "İkna etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 266, english: "Correct", turkish: "Düzeltmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 267, english: "Cover", turkish: "Kapatmak / örtmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 268, english: "Crash", turkish: "Çarpışmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 269, english: "Cross", turkish: "Geçmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 270, english: "Damage", turkish: "Zarar vermek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 271, english: "Deliver", turkish: "Teslim etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 272, english: "Demand", turkish: "Talep etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 273, english: "Design", turkish: "Tasarım yapmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 274, english: "Direct", turkish: "Yönetmek / yönlendirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 275, english: "Disappear", turkish: "Kaybolmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 276, english: "Discover", turkish: "Keşfetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 277, english: "Discuss", turkish: "Tartışmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 278, english: "Display", turkish: "Göstermek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 279, english: "Divide", turkish: "Bölmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 280, english: "Doubt", turkish: "Şüphe etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 281, english: "Encourage", turkish: "Teşvik etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 282, english: "Ensure", turkish: "Sağlamak / garanti etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 283, english: "Establish", turkish: "Kurmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 284, english: "Evaluate", turkish: "Değerlendirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 285, english: "Exchange", turkish: "Değiştirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 286, english: "Experience", turkish: "Deneyimlemek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 287, english: "Explore", turkish: "Keşfetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 288, english: "Extend", turkish: "Uzatmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 289, english: "Focus", turkish: "Odaklanmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 290, english: "Generate", turkish: "Üretmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 291, english: "Identify", turkish: "Tanımlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 292, english: "Improve", turkish: "Geliştirmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 293, english: "Influence", turkish: "Etkilemek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 294, english: "Install", turkish: "Kurmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 295, english: "Investigate", turkish: "Araştırmak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+
+{ id: 296, english: "Limit", turkish: "Sınırlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 297, english: "Link", turkish: "Bağlamak", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 298, english: "Maintain", turkish: "Sürdürmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 299, english: "Measure", turkish: "Ölçmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+{ id: 300, english: "Predict", turkish: "Tahmin etmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() }
+
+
+];
+    initApp();
+    alert('100 A1-b1 kelime başarıyla yüklendi!');
+}
 
         function resetData() {
             if(confirm('Tüm kelimeleriniz silinecek. Emin misiniz?')) { words = []; initApp(); }
