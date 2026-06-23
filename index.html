@@ -2,366 +2,662 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KURDOO GYM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Kişisel İngilizce Kelime Defteri</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #00e676; /* Neon Yeşil */
-            --bg: #000000;
-            --card-bg: #111;
-            --text: #ffffff;
-            --accent: #2979ff; /* Mavi */
-            --warning: #ffea00; /* Sarı */
-            --rest: #ff9100; /* Turuncu - Dinlenme */
-        }
-
-        * {
-            box-sizing: border-box; /* Mobil taşmaları önler */
-            -webkit-tap-highlight-color: transparent; /* Mobildeki mavi tıklama efektini gizler */
-        }
-
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-            padding-bottom: 80px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px; /* Telefon ekranı odaklı max genişlik */
-            margin: 0 auto;
-            padding: 15px;
-        }
-
-        h1 { 
-            text-align: center; 
-            border-bottom: 2px solid var(--primary); 
-            padding-bottom: 10px; 
-            color: #fff; 
-            letter-spacing: 2px;
-            font-style: italic;
-            font-size: 28px;
-            margin-top: 10px;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .active-tab { color: #007AFF; }
         
-        h1 span {
-            color: var(--primary);
-            font-weight: 900;
-        }
+        /* 3D Flashcard Animasyonu Düzeltmesi */
+        .flip-card { background-color: transparent; perspective: 1000px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+        .flipped { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; top:0; left:0; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 1rem; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .flip-card-back { transform: rotateY(180deg); }
         
-        h2 { 
-            color: var(--primary); 
-            border-left: 5px solid var(--primary); 
-            padding-left: 10px; 
-            background: linear-gradient(90deg, #111, transparent);
-            padding-top: 8px;
-            padding-bottom: 8px;
-            margin-top: 15px; 
-            font-size: 18px;
-        }
-
-        /* --- ANTRENMAN (Accordion) --- */
-        .accordion { margin-top: 15px; }
-        .day-btn {
-            background-color: #222; color: #fff; cursor: pointer; padding: 18px 15px;
-            width: 100%; text-align: left; border: none; outline: none; transition: 0.3s;
-            font-size: 16px; font-weight: bold; border-bottom: 1px solid #333;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .day-btn:first-child { border-top-left-radius: 12px; border-top-right-radius: 12px; }
-        .day-btn:last-child { border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
-        .active-day { background-color: #333; color: var(--primary); border-radius: 0; }
-        
-        .panel {
-            padding: 0 10px; background-color: #0a0a0a; max-height: 0; overflow: hidden;
-            transition: max-height 0.3s ease-out; border-left: 2px solid var(--primary);
-        }
-
-        .exercise-card {
-            background: #181818; margin: 12px 0; padding: 15px; border-radius: 10px;
-            position: relative; border: 1px solid #2a2a2a; 
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
-        }
-
-        .ex-name { 
-            font-weight: 900; 
-            font-size: 16px; 
-            color: #fff; 
-            flex: 1;
-            padding-right: 10px;
-        }
-
-        .gif-link {
-            background: #222; color: var(--primary); font-size: 12px; font-weight: bold;
-            padding: 5px 10px; border-radius: 6px; text-decoration: none; border: 1px solid #444;
-            display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;
-        }
-        .gif-link:active { background: #333; }
-
-        .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-        .tag { background: #000; padding: 5px 8px; border-radius: 6px; font-size: 12px; color: #ccc; border: 1px solid #333; font-weight: 600;}
-        .tag.heavy { color: #ff5252; border-color: #500; background: #1a0000; }
-        .tag.rest { color: var(--rest); border-color: #663a00; background: #1a0e00; }
-
-        /* --- KİLO GİRİŞ BÖLÜMÜ (Mobil Uyumlu) --- */
-        .weight-tracker {
-            background: #111;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid #333;
-        }
-        
-        .weight-label {
-            font-size: 14px;
-            color: #aaa;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .input-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .weight-tracker input {
-            background: #000;
-            border: 2px solid #444;
-            color: var(--primary);
-            padding: 10px;
-            border-radius: 8px;
-            width: 80px; /* Mobilde parmakla basması daha kolay */
-            text-align: center;
-            font-size: 18px;
-            font-weight: 900;
-        }
-        
-        .weight-tracker input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        .save-indicator {
-            font-size: 12px;
-            color: var(--primary);
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-weight: bold;
-            position: absolute;
-            right: 15px;
-            bottom: -20px;
-        }
-
-        /* İpuçları Kutusu */
-        .tips-box {
-            background: #1a1a00; border: 1px solid #ffd700; padding: 15px; 
-            border-radius: 12px; margin-top: 30px; font-size: 13px;
-        }
-
+        /* Loading Spinner */
+        .spinner { border: 3px solid rgba(0,0,0,0.1); width: 24px; height: 24px; border-radius: 50%; border-left-color: #007AFF; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; }
+        .dark .spinner { border: 3px solid rgba(255,255,255,0.1); border-left-color: #3b82f6; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-900 dark:bg-zinc-900 dark:text-gray-100 transition-colors duration-200">
 
-<div class="container">
-    <h1>KURDOO <span>GYM</span></h1>
-
-    <h2>PROGRAM (5 GÜN / 12 HAREKET)</h2>
-    <div class="accordion" id="workoutList">
-        </div>
-
-    <div class="tips-box">
-        <strong style="color:#ffd700;">🔥 KURDOO GYM İPUÇLARI:</strong>
-        <ul style="margin-top:8px; padding-left:20px; color:#ddd; margin-bottom: 0;">
-            <li style="margin-bottom: 5px;"><strong>Kalıcı Hafıza:</strong> Girdiğin kilolar telefonunda kalır. Uygulamayı kapatsan da silinmez.</li>
-            <li style="margin-bottom: 5px;"><strong>Pump:</strong> İdmandan 30dk önce yarım çay kaşığı kaya tuzu tüket.</li>
-            <li style="margin-bottom: 5px;"><strong>Son Tekrar:</strong> Belirtilen tekrara ulaştığında kasın tükenmiş olmalı. Kilonu ona göre seç.</li>
-        </ul>
-    </div>
-
-    <div style="text-align:center; margin-top:40px; color:#555; font-size:12px; font-weight: bold;">
-        KURDOO GYM MOBILE SYSTEM V1.0
-    </div>
-</div>
-
-<script>
-    // --- ANTRENMAN DATASI ---
-    const workouts = [
-        {
-            day: "1. GÜN: GÖĞÜS & ÖN KOL",
-            exercises: [
-                {n: "Incline Barbell Bench Press", s:4, r:"8-10", l:"%80", t:"Üst Göğüs", rest:"90s"},
-                {n: "Flat Dumbbell Press", s:4, r:"10-12", l:"%75", t:"Kütle", rest:"90s"},
-                {n: "Cable Crossover", s:3, r:"15", l:"%60", t:"Alt Çizgi", rest:"60s"},
-                {n: "Machine Chest Press", s:3, r:"12", l:"%70", t:"İzolasyon", rest:"60s"},
-                {n: "Pec Deck Fly", s:3, r:"15", l:"%50", t:"Sıkıştırma", rest:"60s"},
-                {n: "Dumbbell Pullover", s:3, r:"12", l:"%65", t:"Genişleme", rest:"60s"},
-                {n: "Z-Bar Skullcrushers", s:4, r:"10", l:"%75", t:"Triceps", rest:"90s"},
-                {n: "Rope Pushdown", s:4, r:"15", l:"%60", t:"Dış Baş", rest:"60s"},
-                {n: "Overhead Ext", s:3, r:"12", l:"%70", t:"Uzun Baş", rest:"60s"},
-                {n: "Bench Dips", s:3, r:"Max", l:"Vücut", t:"Bitiriş", rest:"45s"},
-                {n: "Leg Raise", s:4, r:"15", l:"-", t:"Karın", rest:"45s"},
-                {n: "Plank", s:3, r:"60sn", l:"-", t:"Core", rest:"45s"}
-            ]
-        },
-        {
-            day: "2. GÜN: SIRT & ARKA KOL",
-            exercises: [
-                {n: "Pull Ups", s:4, r:"Max", l:"Vücut", t:"Genişlik", rest:"120s"},
-                {n: "Barbell Row", s:4, r:"8-10", l:"%85", t:"Kalınlık", rest:"120s"},
-                {n: "Lat Pulldown", s:4, r:"12", l:"%75", t:"Kanat", rest:"90s"},
-                {n: "Seated Row", s:3, r:"12", l:"%75", t:"Orta Sırt", rest:"90s"},
-                {n: "Straight Arm Pulldown", s:3, r:"15", l:"%60", t:"Detay", rest:"60s"},
-                {n: "Face Pulls", s:4, r:"15", l:"%50", t:"Arka Omuz", rest:"60s"},
-                {n: "Shrugs", s:4, r:"12", l:"%90", t:"Trapez", rest:"60s"},
-                {n: "Barbell Curl", s:4, r:"8-10", l:"%80", t:"Biceps", rest:"90s"},
-                {n: "Hammer Curl", s:3, r:"12", l:"%70", t:"Brachialis", rest:"60s"},
-                {n: "Preacher Curl", s:3, r:"12", l:"%65", t:"Peak", rest:"60s"},
-                {n: "Concentration Curl", s:3, r:"15", l:"%50", t:"Pump", rest:"45s"},
-                {n: "Hyperextension", s:3, r:"15", l:"Vücut", t:"Bel", rest:"60s"}
-            ]
-        },
-        {
-            day: "3. GÜN: BACAK (LEG DAY)",
-            exercises: [
-                {n: "Squat", s:4, r:"6-8", l:"%85", t:"Tüm Bacak", rest:"150s"},
-                {n: "Leg Press", s:4, r:"10-12", l:"%80", t:"Hacim", rest:"120s"},
-                {n: "RDL (Deadlift)", s:4, r:"10", l:"%75", t:"Arka Bacak", rest:"120s"},
-                {n: "Walking Lunges", s:3, r:"20", l:"Dumb", t:"Kalça", rest:"90s"},
-                {n: "Leg Extension", s:4, r:"15", l:"%65", t:"Ön Bacak", rest:"60s"},
-                {n: "Leg Curl", s:4, r:"15", l:"%65", t:"Arka Bacak", rest:"60s"},
-                {n: "Bulgarian Split", s:3, r:"10", l:"Zor", t:"Güç", rest:"90s"},
-                {n: "Goblet Squat", s:3, r:"15", l:"Orta", t:"İç Bacak", rest:"90s"},
-                {n: "Calf Raise (Ayakta)", s:5, r:"15", l:"Ağır", t:"Kalf", rest:"60s"},
-                {n: "Calf Raise (Oturarak)", s:4, r:"20", l:"Orta", t:"Soleus", rest:"60s"},
-                {n: "Cable Crunch", s:4, r:"15", l:"Ağır", t:"Karın", rest:"45s"},
-                {n: "Russian Twist", s:3, r:"20", l:"Plaka", t:"Yanlar", rest:"45s"}
-            ]
-        },
-        {
-            day: "4. GÜN: OMUZ & KOLLAR",
-            exercises: [
-                {n: "Overhead Press", s:4, r:"8", l:"%80", t:"Omuz", rest:"120s"},
-                {n: "Dumbbell Press", s:3, r:"10", l:"%75", t:"Hacim", rest:"90s"},
-                {n: "Lateral Raise", s:5, r:"15-20", l:"%50", t:"Genişlik", rest:"60s"},
-                {n: "Front Raise", s:3, r:"12", l:"%60", t:"Ön Omuz", rest:"60s"},
-                {n: "Reverse Fly", s:4, r:"15", l:"%60", t:"Arka Omuz", rest:"60s"},
-                {n: "Upright Row", s:3, r:"12", l:"%70", t:"Trapez", rest:"90s"},
-                {n: "Close Grip Bench", s:3, r:"10", l:"%75", t:"Triceps", rest:"90s"},
-                {n: "Incline Curl", s:3, r:"12", l:"%65", t:"Biceps", rest:"60s"},
-                {n: "Rope Hammer", s:3, r:"15", l:"%60", t:"Ön Kol", rest:"60s"},
-                {n: "Triceps Kickback", s:3, r:"15", l:"Hafif", t:"İzole", rest:"45s"},
-                {n: "Wrist Curl", s:4, r:"20", l:"Bar", t:"Bilek", rest:"45s"},
-                {n: "Farmers Walk", s:3, r:"60sn", l:"Ağır", t:"Tutuş", rest:"90s"}
-            ]
-        },
-        {
-            day: "5. GÜN: FULL BODY & EKSİKLER",
-            exercises: [
-                {n: "Deadlift", s:3, r:"5", l:"%90", t:"Güç", rest:"180s"},
-                {n: "Incline DB Press", s:3, r:"10", l:"%75", t:"Üst Göğüs", rest:"90s"},
-                {n: "T-Bar Row", s:3, r:"10", l:"%80", t:"Sırt", rest:"90s"},
-                {n: "Arnold Press", s:3, r:"12", l:"%70", t:"Omuz", rest:"90s"},
-                {n: "Leg Press (Dar)", s:3, r:"15", l:"%70", t:"Dış Bacak", rest:"90s"},
-                {n: "Cable Lateral", s:4, r:"15", l:"%50", t:"Tek Kol", rest:"45s"},
-                {n: "Chin Ups", s:3, r:"Max", l:"Vücut", t:"Biceps", rest:"90s"},
-                {n: "Dips", s:3, r:"Max", l:"Vücut", t:"Göğüs", rest:"90s"},
-                {n: "Woodchoppers", s:3, r:"15", l:"%60", t:"Oblik", rest:"60s"},
-                {n: "Box Jumps", s:3, r:"10", l:"-", t:"Patlayıcı", rest:"60s"},
-                {n: "Burpees", s:3, r:"15", l:"-", t:"Kardiyo", rest:"60s"},
-                {n: "Stretching", s:1, r:"10dk", l:"-", t:"Esneme", rest:"-"}
-            ]
-        }
-    ];
-
-    // --- KİLO KAYDETME FONKSİYONU ---
-    window.saveWeight = function(id) {
-        const inputField = document.getElementById(id);
-        const statusText = document.getElementById('status-' + id);
+    <div class="max-w-md mx-auto min-h-screen flex flex-col bg-white dark:bg-zinc-800 shadow-xl relative pb-20">
         
-        localStorage.setItem(id, inputField.value);
-        
-        statusText.style.opacity = 1;
-        setTimeout(() => {
-            statusText.style.opacity = 0;
-        }, 1500);
-    };
+        <!-- ÜST BAR -->
+        <header class="p-4 border-b border-gray-100 dark:border-zinc-700 flex justify-between items-center sticky top-0 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md z-40">
+            <h1 class="text-xl font-bold tracking-tight text-blue-600 dark:text-blue-400">VocabApp</h1>
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 text-xl transition">🌙</button>
+        </header>
 
-    // --- ARAYÜZ OLUŞTURMA ---
-    const container = document.getElementById('workoutList');
-    workouts.forEach((d, dayIndex) => {
-        const btn = document.createElement('button');
-        btn.className = 'day-btn';
-        btn.innerHTML = `<span>${d.day}</span><span style="font-size:20px;">+</span>`;
-        
-        const pnl = document.createElement('div');
-        pnl.className = 'panel';
-
-        d.exercises.forEach((e, exIndex) => {
-            const uniqueId = `kurdoo-day${dayIndex}-ex${exIndex}`;
-            const savedWeight = localStorage.getItem(uniqueId) || "";
-
-            const card = document.createElement('div');
-            card.className = 'exercise-card';
+        <main class="flex-1 p-4 overflow-y-auto">
             
-            card.innerHTML = `
-                <div class="card-header">
-                    <div class="ex-name">${e.n}</div>
-                    <a href="https://www.google.com/search?tbm=isch&q=${e.n.replace(/ /g, '+')}+exercise+gif" target="_blank" class="gif-link">▶ Görsel</a>
+            <!-- 1. DASHBOARD -->
+            <section id="screen-dashboard" class="space-y-6">
+                <div>
+                    <h2 class="text-2xl font-bold">Selam 👋</h2>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">Günlük hedeflerine doğru ilerle.</p>
                 </div>
-                
-                <div class="tags">
-                    <span class="tag">Set: ${e.s}</span>
-                    <span class="tag">Tekrar: ${e.r}</span>
-                    <span class="tag heavy">Yük: ${e.l}</span>
-                    <span class="tag rest">⏱️ ${e.rest}</span>
+                <div class="bg-blue-50 dark:bg-blue-950/40 p-4 rounded-2xl">
+                    <div class="flex justify-between text-sm font-semibold text-blue-600 dark:text-blue-400 mb-2">
+                        <span>Öğrenme İlerlemen</span>
+                        <span id="progressPercent">%0</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-zinc-700 h-2 rounded-full overflow-hidden">
+                        <div id="progressBar" class="bg-blue-600 h-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p id="progressText" class="text-xs text-gray-500 dark:text-gray-400 mt-2">0 / 0 Kelime Tamamlandı</p>
                 </div>
-                
-                <div class="weight-tracker">
-                    <span class="weight-label">⚖️ Ağırlık:</span>
-                    <div class="input-group" style="position:relative;">
-                        <input type="number" inputmode="decimal" id="${uniqueId}" value="${savedWeight}" placeholder="KG" oninput="saveWeight('${uniqueId}')">
-                        <span class="save-indicator" id="status-${uniqueId}">✓ Kaydedildi</span>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gray-50 dark:bg-zinc-700/50 p-4 rounded-xl">
+                        <span class="text-xs text-gray-400">Toplam Kelime</span>
+                        <div id="statTotal" class="text-2xl font-bold text-blue-600">0</div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-zinc-700/50 p-4 rounded-xl">
+                        <span class="text-xs text-gray-400">Bugün Tekrar</span>
+                        <div id="statReview" class="text-2xl font-bold text-orange-500">0</div>
                     </div>
                 </div>
-            `;
-            pnl.appendChild(card);
+                
+                <!-- SON EKLENEN KELİMELER -->
+                <div>
+                    <h3 class="font-bold text-lg mb-3">Son Eklenen Kelimeler</h3>
+                    <div id="recentWordsList" class="space-y-2"></div>
+                </div>
+            </section>
+
+            <!-- 2. KELİMELER -->
+            <section id="screen-words" class="hidden space-y-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Kelime Defterim</h2>
+                    <button onclick="openModal()" class="bg-blue-600 text-white px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition">Yeni Ekle</button>
+                </div>
+                <div id="wordsList" class="space-y-2"></div>
+            </section>
+
+            <!-- 3. ÇALIŞMA MERKEZİ -->
+            <section id="screen-study" class="hidden space-y-4">
+                <h2 class="text-xl font-bold">Çalışma Merkezi</h2>
+                
+                <div id="studyMenu" class="space-y-3">
+                    <button onclick="startActivity('flashcards')" class="w-full text-left p-4 bg-gray-50 dark:bg-zinc-700/50 rounded-xl flex items-center justify-between hover:bg-gray-100 dark:hover:bg-zinc-700 transition">
+                        <div>
+                            <div class="font-bold">🃏 Flashcards</div>
+                            <div class="text-xs text-gray-400">Kelimeleri çevirerek test et.</div>
+                        </div>
+                        <span class="text-blue-500">▶</span>
+                    </button>
+                    <button onclick="startActivity('quiz')" class="w-full text-left p-4 bg-gray-50 dark:bg-zinc-700/50 rounded-xl flex items-center justify-between hover:bg-gray-100 dark:hover:bg-zinc-700 transition">
+                        <div>
+                            <div class="font-bold">🎯 Çoktan Seçmeli</div>
+                            <div class="text-xs text-gray-400">4 seçenek arasından doğruyu bul.</div>
+                        </div>
+                        <span class="text-blue-500">▶</span>
+                    </button>
+                    <button onclick="startActivity('writing')" class="w-full text-left p-4 bg-gray-50 dark:bg-zinc-700/50 rounded-xl flex items-center justify-between hover:bg-gray-100 dark:hover:bg-zinc-700 transition">
+                        <div>
+                            <div class="font-bold">✍️ Kelime Yazma Testi</div>
+                            <div class="text-xs text-gray-400">Anlamı gör, İngilizcesini klavyeyle yaz.</div>
+                        </div>
+                        <span class="text-blue-500">▶</span>
+                    </button>
+                    <button onclick="startActivity('engDef')" class="w-full text-left p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-between hover:bg-blue-100 transition border border-blue-100 dark:border-blue-900">
+                        <div>
+                            <div class="font-bold text-blue-700 dark:text-blue-400">🌍 İngilizce Açıklama Testi</div>
+                            <div class="text-xs text-blue-500 opacity-80">İngilizce tanımı oku, kelimeyi bul. (İnternet gerektirir)</div>
+                        </div>
+                        <span class="text-blue-500">▶</span>
+                    </button>
+                </div>
+
+                <!-- OYUN ALANLARI -->
+                <div id="gameArea" class="hidden space-y-6">
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span id="gameProgress" class="font-medium">Soru: 0/0</span>
+                        <button onclick="switchTab('study')" class="text-red-500 font-bold hover:text-red-600">✕ Çıkış</button>
+                    </div>
+
+                    <!-- Flashcard Görünümü -->
+                    <div id="flashcardView" class="hidden">
+                        <div class="flip-card w-full h-72 cursor-pointer mb-6" onclick="document.getElementById('cardInner').classList.toggle('flipped')">
+                            <div id="cardInner" class="flip-card-inner w-full h-full">
+                                <div class="flip-card-front bg-blue-600 text-white">
+                                    <button onclick="event.stopPropagation(); playVoice(document.getElementById('cardEng').innerText)" class="absolute top-4 right-4 text-2xl bg-white/20 p-2 rounded-full hover:bg-white/30 transition">🔊</button>
+                                    <span id="cardEng" class="text-4xl font-bold">Word</span>
+                                    <span class="text-sm opacity-80 mt-6 bg-black/20 px-4 py-1 rounded-full">Çevirmek için karta dokun 🔄</span>
+                                </div>
+                                <div class="flip-card-back bg-emerald-600 text-white">
+                                    <span id="cardTr" class="text-4xl font-bold">Kelime</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-center space-x-4">
+                            <button onclick="handleReview(false)" class="flex-1 bg-red-500 text-white py-4 rounded-xl font-bold text-lg hover:bg-red-600 transition shadow-lg shadow-red-500/30">Bilemedim ❌</button>
+                            <button onclick="handleReview(true)" class="flex-1 bg-emerald-500 text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/30">Bildim ✔️</button>
+                        </div>
+                    </div>
+
+                    <!-- Normal Quiz Görünümü -->
+                    <div id="quizView" class="hidden space-y-4">
+                        <div class="bg-gray-100 dark:bg-zinc-700 p-6 rounded-2xl text-center relative shadow-sm">
+                            <button onclick="playVoice(document.getElementById('quizQuestion').innerText)" class="absolute top-4 right-4 text-xl">🔊</button>
+                            <span class="text-xs text-gray-500 dark:text-gray-400 font-bold block mb-2">BU KELİMENİN TÜRKÇESİ NEDİR?</span>
+                            <h3 id="quizQuestion" class="text-3xl font-bold text-blue-600 dark:text-blue-400"></h3>
+                        </div>
+                        <div id="quizOptions" class="grid grid-cols-1 gap-3"></div>
+                        <button id="nextBtn" onclick="nextQuestion()" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hidden shadow-lg">Sonraki Soru ➔</button>
+                    </div>
+
+                    <!-- İngilizce Tanım Quiz Görünümü -->
+                    <div id="engDefView" class="hidden space-y-4">
+                        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 p-6 rounded-2xl text-center relative shadow-sm min-h-[150px] flex flex-col justify-center">
+                            <span class="text-xs text-blue-500 font-bold block mb-3">BU İNGİLİZCE TANIM HANGİ KELİMEYE AİT?</span>
+                            <h3 id="engDefQuestion" class="text-lg font-medium text-gray-800 dark:text-gray-200 leading-relaxed"><div class="spinner"></div> Aranıyor...</h3>
+                        </div>
+                        <div id="engDefOptions" class="grid grid-cols-1 gap-3"></div>
+                        <button id="engDefNextBtn" onclick="nextQuestion()" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hidden shadow-lg">Sonraki Soru ➔</button>
+                    </div>
+
+                    <!-- Yazma Görünümü -->
+                    <div id="writingView" class="hidden space-y-4">
+                        <div class="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 p-6 rounded-2xl text-center">
+                            <span class="text-xs text-emerald-600 dark:text-emerald-400 font-bold block mb-2">BU KELİMENİN İNGİLİZCESİNİ YAZ</span>
+                            <h3 id="writingQuestion" class="text-3xl font-bold text-emerald-700 dark:text-emerald-300"></h3>
+                        </div>
+                        <input type="text" id="writingInput" autocomplete="off" placeholder="Kelimeyi buraya yaz..." class="w-full p-4 text-center text-2xl font-bold bg-white dark:bg-zinc-700 rounded-xl outline-none border-2 border-gray-200 dark:border-zinc-600 focus:border-blue-500 shadow-sm transition">
+                        <button onclick="checkWriting()" class="w-full bg-blue-600 hover:bg-blue-700 transition text-white py-4 rounded-xl font-bold shadow-lg">Cevabı Kontrol Et</button>
+                        <div id="writingResult" class="text-center font-bold text-xl p-4 rounded-xl hidden"></div>
+                        <button id="writingNextBtn" onclick="nextQuestion()" class="w-full bg-gray-800 dark:bg-gray-100 dark:text-zinc-900 text-white py-4 rounded-xl font-bold hidden transition">Sonraki ➔</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. ÜCRETSİZ SÖZLÜK / BAĞLAM -->
+            <section id="screen-ai" class="hidden space-y-4">
+                <h2 class="text-xl font-bold">🌍 Akıllı Sözlük & Çeviri</h2>
+                <p class="text-xs text-gray-500">İngilizce açıklama, örnek cümle ve Türkçe çevirisini internetten ücretsiz bulur.</p>
+                <select id="aiWordSelect" class="w-full p-4 font-medium bg-white dark:bg-zinc-700 rounded-xl outline-none border border-gray-200 dark:border-zinc-600 shadow-sm"></select>
+                <button onclick="fetchDictionaryData()" class="w-full bg-blue-600 hover:bg-blue-700 transition text-white py-4 rounded-xl font-bold shadow-lg">Detayları İnternette Ara</button>
+                <div id="aiResult" class="p-5 bg-white dark:bg-zinc-700/50 rounded-xl text-sm min-h-[200px] whitespace-pre-line leading-relaxed border border-gray-100 dark:border-zinc-700 shadow-sm hidden"></div>
+            </section>
+
+            <!-- 5. AYARLAR -->
+            <section id="screen-settings" class="hidden space-y-6">
+                <h2 class="text-xl font-bold">Ayarlar</h2>
+                <div class="space-y-4 bg-white dark:bg-zinc-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-700">
+                    <button onclick="loadMockData()" class="w-full text-left p-4 text-blue-600 dark:text-blue-400 font-bold hover:bg-blue-50 dark:hover:bg-zinc-700 rounded-xl flex items-center transition"><span class="text-xl mr-3">⚡</span> Hazır A1-A2 Örneklerini Yükle</button>
+                    <hr class="border-gray-100 dark:border-zinc-700">
+                    <button onclick="resetData()" class="w-full text-left p-4 text-red-500 font-bold hover:bg-red-50 dark:hover:bg-zinc-700 rounded-xl flex items-center transition"><span class="text-xl mr-3">🚨</span> Tüm Defteri Sıfırla (Sil)</button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ALT MENÜ -->
+        <nav class="absolute bottom-0 left-0 right-0 h-[70px] border-t border-gray-100 dark:border-zinc-700 bg-white/90 dark:bg-zinc-800/90 backdrop-blur-md flex justify-around items-center text-[10px] font-semibold z-40 pb-2">
+            <button onclick="switchTab('dashboard')" class="flex flex-col items-center space-y-1 text-gray-400 active-tab w-full py-2" id="tab-dashboard"><span class="text-2xl mb-1">📊</span><span>ÖZET</span></button>
+            <button onclick="switchTab('words')" class="flex flex-col items-center space-y-1 text-gray-400 w-full py-2" id="tab-words"><span class="text-2xl mb-1">📖</span><span>KELİMELER</span></button>
+            <button onclick="switchTab('study')" class="flex flex-col items-center space-y-1 text-gray-400 w-full py-2" id="tab-study"><span class="text-2xl mb-1">🎯</span><span>ÇALIŞMA</span></button>
+            <button onclick="switchTab('ai')" class="flex flex-col items-center space-y-1 text-gray-400 w-full py-2" id="tab-ai"><span class="text-2xl mb-1">🌍</span><span>SÖZLÜK</span></button>
+            <button onclick="switchTab('settings')" class="flex flex-col items-center space-y-1 text-gray-400 w-full py-2" id="tab-settings"><span class="text-2xl mb-1">⚙️</span><span>AYARLAR</span></button>
+        </nav>
+
+        <!-- KELİME EKLE/DÜZENLE MODAL -->
+        <div id="addModal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-end justify-center transition-opacity backdrop-blur-sm">
+            <div class="bg-white dark:bg-zinc-800 w-full max-w-md rounded-t-[30px] p-6 space-y-5 shadow-2xl transform transition-transform">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 id="modalTitle" class="text-xl font-bold">Yeni Kelime Ekle</h3>
+                    <button onclick="closeModal()" class="text-gray-400 bg-gray-100 dark:bg-zinc-700 rounded-full w-8 h-8 flex justify-center items-center font-bold hover:bg-gray-200">✕</button>
+                </div>
+                <input type="hidden" id="editId">
+                <div>
+                    <label class="text-xs font-bold text-gray-400 ml-1">İNGİLİZCE KELİME</label>
+                    <input type="text" id="addEng" class="w-full p-4 mt-1 bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700 rounded-xl outline-none focus:border-blue-500 transition">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-gray-400 ml-1">TÜRKÇE ANLAMI</label>
+                    <input type="text" id="addTr" class="w-full p-4 mt-1 bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700 rounded-xl outline-none focus:border-blue-500 transition">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 ml-1">TÜRÜ</label>
+                        <select id="addType" class="w-full p-4 mt-1 bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700 rounded-xl outline-none">
+                            <option value="Noun">İsim (Noun)</option>
+                            <option value="Verb">Fiil (Verb)</option>
+                            <option value="Adjective">Sıfat (Adj)</option>
+                            <option value="Adverb">Zarf (Adv)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 ml-1">SEVİYE</label>
+                        <select id="addLevel" class="w-full p-4 mt-1 bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700 rounded-xl outline-none">
+                            <option value="A1" selected>A1</option><option value="A2">A2</option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="saveWord()" class="w-full bg-blue-600 hover:bg-blue-700 transition text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-blue-500/30 mt-4">Deftere Kaydet</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let words = JSON.parse(localStorage.getItem('vocab_words')) || [];
+        let isDarkMode = localStorage.getItem('vocab_dark_mode') === 'true';
+
+        let currentActivity = '';
+        let studyList = [];
+        let gameIndex = 0;
+        let correctAnswer = '';
+
+        window.onload = function() {
+            if(isDarkMode) document.documentElement.classList.add('dark');
+            initApp();
+        };
+
+        function initApp() {
+            localStorage.setItem('vocab_words', JSON.stringify(words));
+            renderDashboard();
+            renderWordsList();
+            updateAISelect();
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('vocab_dark_mode', document.documentElement.classList.contains('dark'));
         });
 
-        btn.addEventListener('click', function() {
-            this.classList.toggle('active-day');
-            this.children[1].innerText = this.classList.contains('active-day') ? '−' : '+';
+        function switchTab(tabName) {
+            ['dashboard', 'words', 'study', 'ai', 'settings'].forEach(t => {
+                document.getElementById(`screen-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).classList.remove('active-tab');
+            });
+            document.getElementById(`screen-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabName}`).classList.add('active-tab');
             
-            if(pnl.style.maxHeight) { 
-                pnl.style.maxHeight = null; 
-            } else { 
-                document.querySelectorAll('.panel').forEach(p => p.style.maxHeight = null);
-                document.querySelectorAll('.day-btn').forEach(b => {
-                    if(b !== this) { b.classList.remove('active-day'); b.children[1].innerText = '+'; }
+            if(tabName === 'study') {
+                document.getElementById('studyMenu').classList.remove('hidden');
+                document.getElementById('gameArea').classList.add('hidden');
+            }
+        }
+
+        function playVoice(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // --- CRUD İŞLEMLERİ ---
+        function openModal(id = null) {
+            const modal = document.getElementById('addModal');
+            document.getElementById('modalTitle').innerText = id ? 'Kelimeyi Düzenle' : 'Yeni Kelime Ekle';
+            
+            if(id) {
+                const w = words.find(x => x.id === id);
+                document.getElementById('editId').value = w.id;
+                document.getElementById('addEng').value = w.english;
+                document.getElementById('addTr').value = w.turkish;
+                document.getElementById('addType').value = w.wordType;
+                document.getElementById('addLevel').value = w.level;
+            } else {
+                document.getElementById('editId').value = '';
+                document.getElementById('addEng').value = '';
+                document.getElementById('addTr').value = '';
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() { document.getElementById('addModal').classList.add('hidden'); }
+
+        function saveWord() {
+            const id = document.getElementById('editId').value;
+            const eng = document.getElementById('addEng').value.trim();
+            const tr = document.getElementById('addTr').value.trim();
+            const type = document.getElementById('addType').value;
+            const level = document.getElementById('addLevel').value;
+
+            if(!eng || !tr) return alert('Lütfen kelimeyi ve anlamını yazın.');
+
+            if(id) {
+                words = words.map(w => w.id == id ? {...w, english: eng, turkish: tr, wordType: type, level: level} : w);
+            } else {
+                words.push({ id: Date.now(), english: eng, turkish: tr, wordType: type, level: level, isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() });
+            }
+            initApp();
+            closeModal();
+        }
+
+        function deleteWord(id) {
+            if(confirm('Silmek istediğine emin misin?')) {
+                words = words.filter(w => w.id !== id);
+                initApp();
+            }
+        }
+
+        function toggleFav(id) {
+            words = words.map(w => w.id === id ? {...w, isFavorite: !w.isFavorite} : w);
+            initApp();
+        }
+
+        // --- EKRAN ÇİZİMLERİ ---
+        function renderDashboard() {
+            document.getElementById('statTotal').innerText = words.length;
+            const today = new Date();
+            document.getElementById('statReview').innerText = words.filter(w => new Date(w.nextReviewDate) <= today).length;
+            const learned = words.filter(w => w.reviewStage >= 30).length;
+            const percent = words.length === 0 ? 0 : Math.round((learned / words.length) * 100);
+            document.getElementById('progressPercent').innerText = `%${percent}`;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+            document.getElementById('progressText').innerText = `${learned} / ${words.length} Kelime Tamamen Öğrenildi`;
+
+            // Son Eklenen Kelimeler (Düzeltildi)
+            const recentContainer = document.getElementById('recentWordsList');
+            const recentWords = [...words].reverse().slice(0, 3);
+            if(recentWords.length === 0) {
+                recentContainer.innerHTML = '<div class="text-sm text-gray-400 p-4 bg-gray-50 dark:bg-zinc-800 rounded-xl border border-dashed border-gray-300 dark:border-zinc-600 text-center">Henüz kelime eklenmemiş.</div>';
+            } else {
+                recentContainer.innerHTML = '';
+                recentWords.forEach(w => {
+                    recentContainer.innerHTML += `
+                        <div class="flex justify-between items-center p-3 bg-white dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 rounded-xl shadow-sm mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 font-bold">${w.level}</div>
+                                <div>
+                                    <div class="font-bold text-gray-800 dark:text-gray-100">${w.english}</div>
+                                    <div class="text-xs text-gray-500">${w.turkish}</div>
+                                </div>
+                            </div>
+                            <button onclick="playVoice('${w.english}')" class="text-xl text-gray-400 hover:text-blue-500 transition">🔊</button>
+                        </div>
+                    `;
                 });
-                // Mobilde içerik uzayabileceği için dinamik yükseklik ayarı
-                pnl.style.maxHeight = pnl.scrollHeight + 50 + "px"; 
+            }
+        }
+
+        function renderWordsList() {
+            const container = document.getElementById('wordsList');
+            container.innerHTML = words.length === 0 ? '<div class="text-center text-gray-400 py-10">Defterin bomboş. Yukarıdan yeni kelime ekle!</div>' : '';
+            words.forEach(w => {
+                container.innerHTML += `
+                    <div class="p-4 bg-white dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 shadow-sm rounded-2xl mb-3 flex flex-col gap-2 relative">
+                        <div class="flex justify-between items-start">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-xl text-gray-900 dark:text-white">${w.english}</span>
+                                <span class="text-[10px] px-2 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-md font-bold">${w.wordType}</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <button onclick="toggleFav(${w.id})" class="text-xl p-1">${w.isFavorite ? '⭐' : '<span class="opacity-30">⭐</span>'}</button>
+                                <button onclick="openModal(${w.id})" class="p-1 text-gray-400 hover:text-blue-500">✏️</button>
+                                <button onclick="deleteWord(${w.id})" class="p-1 text-gray-400 hover:text-red-500">🗑️</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-gray-600 dark:text-gray-300 font-medium">
+                            <span>TR:</span> <span class="text-blue-600 dark:text-blue-400">${w.turkish}</span>
+                        </div>
+                        <button onclick="playVoice('${w.english}')" class="absolute bottom-4 right-4 bg-gray-100 dark:bg-zinc-700 p-2 rounded-full shadow-sm hover:bg-gray-200 dark:hover:bg-zinc-600 transition">🔊</button>
+                    </div>
+                `;
+            });
+        }
+
+        // --- OYUN MOTORU VE ÇALIŞMA SİSTEMİ ---
+        function startActivity(type) {
+            if(words.length < 4) return alert('Herhangi bir teste başlamak için defterinde en az 4 kelime olmalı.');
+            currentActivity = type;
+            studyList = [...words].sort(() => Math.random() - 0.5).slice(0, 5); 
+            gameIndex = 0;
+            
+            document.getElementById('studyMenu').classList.add('hidden');
+            document.getElementById('gameArea').classList.remove('hidden');
+            ['flashcardView', 'quizView', 'writingView', 'engDefView'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById(`${type}View`).classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if(gameIndex >= studyList.length) {
+                alert('🎉 Harika iş! Bu çalışma seansını tamamladın.');
+                return switchTab('dashboard');
+            }
+            
+            document.getElementById('gameProgress').innerText = `Soru: ${gameIndex + 1}/${studyList.length}`;
+            const word = studyList[gameIndex];
+            
+            if(currentActivity === 'flashcards') {
+                document.getElementById('cardInner').classList.remove('flipped');
+                document.getElementById('cardEng').innerText = word.english;
+                document.getElementById('cardTr').innerText = word.turkish;
+            } 
+            else if(currentActivity === 'quiz') {
+                correctAnswer = word.turkish;
+                document.getElementById('quizQuestion').innerText = word.english;
+                document.getElementById('nextBtn').classList.add('hidden');
+                
+                let options = [word.turkish];
+                let pool = words.filter(w => w.turkish !== word.turkish).sort(() => Math.random() - 0.5);
+                for(let i=0; i<3; i++) if(pool[i]) options.push(pool[i].turkish);
+                options.sort(() => Math.random() - 0.5);
+
+                const optContainer = document.getElementById('quizOptions');
+                optContainer.innerHTML = '';
+                options.forEach(opt => {
+                    optContainer.innerHTML += `<button onclick="checkQuiz(this, '${opt}')" class="w-full p-4 bg-white dark:bg-zinc-700 rounded-xl font-bold border-2 border-gray-100 dark:border-zinc-600 shadow-sm hover:border-blue-500 transition text-lg text-left pl-6">${opt}</button>`;
+                });
+            }
+            else if(currentActivity === 'writing') {
+                correctAnswer = word.english.toLowerCase();
+                document.getElementById('writingQuestion').innerText = word.turkish;
+                document.getElementById('writingInput').value = '';
+                document.getElementById('writingResult').classList.add('hidden');
+                document.getElementById('writingNextBtn').classList.add('hidden');
+                document.getElementById('writingInput').disabled = false;
+                setTimeout(() => document.getElementById('writingInput').focus(), 100);
+            }
+            else if(currentActivity === 'engDef') {
+                loadEngDefQuestion(word);
+            }
+        }
+
+        async function loadEngDefQuestion(word) {
+            correctAnswer = word.english;
+            document.getElementById('engDefQuestion').innerHTML = '<div class="spinner"></div> Anlam İnternetten Çekiliyor...';
+            document.getElementById('engDefNextBtn').classList.add('hidden');
+            
+            // Seçenekleri oluştur
+            let options = [word.english];
+            let pool = words.filter(w => w.english !== word.english).sort(() => Math.random() - 0.5);
+            for(let i=0; i<3; i++) if(pool[i]) options.push(pool[i].english);
+            options.sort(() => Math.random() - 0.5);
+
+            const optContainer = document.getElementById('engDefOptions');
+            optContainer.innerHTML = '';
+            options.forEach(opt => {
+                optContainer.innerHTML += `<button onclick="checkEngDef(this, '${opt}')" class="w-full p-4 bg-white dark:bg-zinc-700 rounded-xl font-bold border-2 border-gray-100 dark:border-zinc-600 shadow-sm hover:border-blue-500 transition text-lg disabled:opacity-70">${opt}</button>`;
+            });
+
+            // İnternetten Tanım Çek
+            try {
+                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word.english}`);
+                if(!res.ok) throw new Error();
+                const data = await res.json();
+                const definition = data[0].meanings[0].definitions[0].definition;
+                document.getElementById('engDefQuestion').innerText = `"${definition}"`;
+            } catch(e) {
+                // İnternet yoksa veya api kelimeyi bulamazsa fallback
+                document.getElementById('engDefQuestion').innerHTML = `<span class="text-red-500 text-sm">İnternet bağlantısı koptu veya kelime sözlükte yok.</span><br><br><span class="text-gray-500 text-sm">Türkçe anlamı:</span> ${word.turkish}`;
+            }
+        }
+
+        function handleReview(isCorrect) {
+            const word = studyList[gameIndex];
+            let nextStage = isCorrect ? (word.reviewStage === 0 ? 1 : word.reviewStage === 1 ? 3 : word.reviewStage === 3 ? 7 : 14) : 0;
+            let nextDate = new Date();
+            nextDate.setDate(nextDate.getDate() + nextStage);
+            words = words.map(w => w.id === word.id ? {...w, reviewStage: nextStage, nextReviewDate: nextDate.toISOString()} : w);
+            initApp();
+            gameIndex++;
+            loadQuestion();
+        }
+
+        function checkQuiz(btn, selected) {
+            const buttons = document.getElementById('quizOptions').getElementsByTagName('button');
+            for(let b of buttons) b.disabled = true;
+
+            if(selected === correctAnswer) {
+                btn.className = 'w-full p-4 rounded-xl font-bold border-2 transition text-lg text-left pl-6 bg-emerald-500 border-emerald-600 text-white shadow-lg';
+                playVoice(studyList[gameIndex].english);
+            } else {
+                btn.className = 'w-full p-4 rounded-xl font-bold border-2 transition text-lg text-left pl-6 bg-red-500 border-red-600 text-white shadow-lg';
+                for(let b of buttons) if(b.innerText === correctAnswer) b.className = 'w-full p-4 rounded-xl font-bold border-2 transition text-lg text-left pl-6 bg-emerald-500 border-emerald-600 text-white';
+            }
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        function checkEngDef(btn, selected) {
+            const buttons = document.getElementById('engDefOptions').getElementsByTagName('button');
+            for(let b of buttons) b.disabled = true;
+
+            if(selected === correctAnswer) {
+                btn.className = 'w-full p-4 rounded-xl font-bold border-2 transition text-lg bg-emerald-500 border-emerald-600 text-white shadow-lg';
+                playVoice(selected);
+            } else {
+                btn.className = 'w-full p-4 rounded-xl font-bold border-2 transition text-lg bg-red-500 border-red-600 text-white shadow-lg';
+                for(let b of buttons) if(b.innerText === correctAnswer) b.className = 'w-full p-4 rounded-xl font-bold border-2 transition text-lg bg-emerald-500 border-emerald-600 text-white';
+            }
+            document.getElementById('engDefNextBtn').classList.remove('hidden');
+        }
+
+        function checkWriting() {
+            const inputVal = document.getElementById('writingInput').value.trim().toLowerCase();
+            if(!inputVal) return;
+            
+            const resultBox = document.getElementById('writingResult');
+            document.getElementById('writingInput').disabled = true;
+            resultBox.classList.remove('hidden');
+
+            if(inputVal === correctAnswer) {
+                resultBox.innerHTML = '✅ Mükemmel!';
+                resultBox.className = "text-center font-bold text-xl p-4 rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800";
+                playVoice(correctAnswer);
+            } else {
+                resultBox.innerHTML = `❌ Yanlış yazdın.<br><span class="text-sm text-gray-500">Doğrusu:</span> <span class="text-2xl ml-2 text-blue-600 dark:text-blue-400">${studyList[gameIndex].english}</span>`;
+                resultBox.className = "text-center font-bold text-xl p-4 rounded-xl bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400 border border-red-100 dark:border-red-800";
+            }
+            document.getElementById('writingNextBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            gameIndex++;
+            loadQuestion();
+        }
+
+        // --- SÖZLÜK VE ÇEVİRİ API (Çift Katmanlı) ---
+        function updateAISelect() {
+            const select = document.getElementById('aiWordSelect');
+            select.innerHTML = '<option value="" disabled selected>Defterinden bir kelime seç...</option>';
+            words.forEach(w => { select.innerHTML += `<option value="${w.english}">${w.english} (${w.turkish})</option>`; });
+        }
+
+        async function fetchDictionaryData() {
+            const word = document.getElementById('aiWordSelect').value;
+            if(!word) return alert('Lütfen listeden bir kelime seçin.');
+            
+            const resultBox = document.getElementById('aiResult');
+            resultBox.classList.remove('hidden');
+            resultBox.innerHTML = '<div class="text-center py-6"><div class="spinner"></div><p class="mt-4 text-gray-500 font-medium">Sözlükten veriler çekiliyor, çeviri yapılıyor...</p></div>';
+
+            try {
+                // 1. İngilizce Detayları Çek (Free Dictionary)
+                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+                if(!res.ok) throw new Error("Sözlükte bulunamadı.");
+                const data = await res.json();
+                
+                const meaning = data[0].meanings[0];
+                const defObj = meaning.definitions[0];
+                const engDefinition = defObj.definition;
+                
+                // Eğer API'de örnek yoksa, mantıklı bir cümle uydur veya anlamı örnek olarak göster.
+                let engExample = defObj.example ? defObj.example : `Learning the word "${word}" is very important for my English.`;
+
+                // 2. Türkçe Çeviri Çek (MyMemory Free API) - Örnek cümleyi Türkçe'ye çevir!
+                let trExample = "Çeviri yüklenemedi.";
+                try {
+                    const trRes = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(engExample)}&langpair=en|tr`);
+                    const trData = await trRes.json();
+                    trExample = trData.responseData.translatedText;
+                } catch(e) { console.log("Çeviri hatası"); }
+
+                // Sonucu Ekrana Çiz
+                resultBox.innerHTML = `
+                    <div class="flex items-center gap-3 border-b border-gray-100 dark:border-zinc-700 pb-3 mb-4">
+                        <button onclick="playVoice('${word}')" class="text-2xl bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full text-blue-500 hover:scale-110 transition">🔊</button>
+                        <div>
+                            <strong class="text-2xl text-gray-900 dark:text-white capitalize">${word}</strong>
+                            <span class="text-xs ml-2 text-gray-400 font-medium">${meaning.partOfSpeech}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <span class="text-xs font-bold text-blue-500 block mb-1">İNGİLİZCE SÖZLÜK ANLAMI (DEFINITION)</span>
+                        <p class="text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-zinc-800 p-3 rounded-xl">${engDefinition}</p>
+                    </div>
+
+                    <div class="bg-emerald-50 dark:bg-emerald-900/10 p-4 rounded-xl border border-emerald-100 dark:border-emerald-900/30 relative">
+                        <button onclick="playVoice('${engExample.replace(/'/g, "")}')" class="absolute top-4 right-4 text-xl opacity-70 hover:opacity-100">🔊</button>
+                        <span class="text-xs font-bold text-emerald-600 block mb-2">ÖRNEK CÜMLE & ÇEVİRİ</span>
+                        <p class="text-gray-800 dark:text-gray-200 font-medium text-lg leading-snug mb-3 pr-8">"${engExample}"</p>
+                        <p class="text-emerald-700 dark:text-emerald-400 font-medium text-sm pt-3 border-t border-emerald-200/50 dark:border-emerald-800/50">🇹🇷 ${trExample}</p>
+                    </div>
+                `;
+            } catch (e) {
+                resultBox.innerHTML = `
+                    <div class="text-center py-6">
+                        <span class="text-4xl">😕</span>
+                        <p class="text-red-500 font-bold mt-4">Bu kelime için internetten detay çekilemedi.</p>
+                        <p class="text-xs text-gray-400 mt-2">Kelimeyi doğru yazdığınızdan ve internete bağlı olduğunuzdan emin olun.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function loadMockData() {
+            words = [
+                { id: 1, english: "Explore", turkish: "Keşfetmek", wordType: "Verb", level: "A2", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+                { id: 2, english: "Journey", turkish: "Yolculuk", wordType: "Noun", level: "A2", isFavorite: true, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+                { id: 3, english: "Quickly", turkish: "Hızlıca", wordType: "Adverb", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+                { id: 4, english: "Beautiful", turkish: "Güzel", wordType: "Adjective", level: "A1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() },
+                { id: 5, english: "Maintain", turkish: "Sürdürmek, Bakımını yapmak", wordType: "Verb", level: "B1", isFavorite: false, reviewStage: 0, nextReviewDate: new Date().toISOString() }
+            ];
+            initApp();
+            alert('A1-B1 Örnek kelimeler başarıyla yüklendi!');
+        }
+
+        function resetData() {
+            if(confirm('Tüm kelimeleriniz kalıcı olarak silinecek! İşleme devam etmek istiyor musunuz?')) {
+                words = [];
+                initApp();
+            }
+        }
+
+        // Klavyeden enter tuşu olayları
+        document.getElementById('writingInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !document.getElementById('writingInput').disabled) checkWriting();
+        });
+        document.addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') {
+                if(!document.getElementById('writingNextBtn').classList.contains('hidden')) nextQuestion();
+                if(!document.getElementById('nextBtn').classList.contains('hidden')) nextQuestion();
+                if(!document.getElementById('engDefNextBtn').classList.contains('hidden')) nextQuestion();
             }
         });
-
-        container.appendChild(btn);
-        container.appendChild(pnl);
-    });
-</script>
-
+    </script>
 </body>
 </html>
