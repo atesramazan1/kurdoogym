@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YDS & İngilizce Kelime Sistemi - V6 Dev Arşiv</title>
+    <title>Kelime sitesi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -53,33 +53,21 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center justify-between py-3 gap-3">
                 <div class="flex items-center gap-3">
-                    <div class="bg-indigo-600 p-2.5 rounded-xl shadow-inner">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 class="font-extrabold text-lg sm:text-xl tracking-tight flex items-center gap-2">
-                            YDS & CEFR Kelime Sistemi
-                            <span class="bg-amber-500 text-slate-950 text-xs font-black px-2 py-0.5 rounded-full">V6 DEV ARŞİV</span>
-                        </h1>
-                        <p class="text-xs text-indigo-300">480+ Hazır Akademik & CEFR Kelime • Eş/Zıt Anlam • Sesli Telaffuz • Yüksek Performans</p>
-                    </div>
-                </div>
+
 
                 <!-- Navigation Buttons -->
                 <nav class="flex flex-wrap justify-center gap-1.5 sm:gap-2">
-                    <button onclick="switchTab('flashcards')" id="tab-flashcards" class="nav-btn bg-indigo-600 text-white px-3.5 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-1.5 shadow-sm">
-                        <span>🎴</span> Bilgi Kartları
+                    <button onclick="switchTab('flashcards')" id="tab-flashcards" class="nav-btn bg-indigo-600 text-white px-3.5 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-1.0 shadow-sm">
+                        <span>🎴</span> KART
                     </button>
-                    <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-btn text-indigo-200 hover:bg-indigo-800/70 px-3.5 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-1.5">
-                        <span>📝</span> Test Çöz
+                    <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-btn text-indigo-200 hover:bg-indigo-800/70 px-3.5 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-1.0">
+                        <span>📝</span> PRATİK
                     </button>
-                    <button onclick="switchTab('packs')" id="tab-packs" class="nav-btn text-indigo-200 hover:bg-indigo-800/70 px-3.5 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-1.5">
-                        <span>📦</span> Hazır Paketler <span class="bg-emerald-500 text-slate-950 text-[11px] font-extrabold px-1.5 py-0.2 rounded-md">480</span>
+                    <button onclick="switchTab('packs')" id="tab-packs" class="nav-btn text-indigo-200 hover:bg-indigo-800/70 px-3.5 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-1.0">
+                        <span></span>BOX<span class="bg-emerald-500 text-slate-950 text-[11px] font-extrabold px-1.5 py-0.2 rounded-md"></span>
                     </button>
-                    <button onclick="switchTab('manage')" id="tab-manage" class="nav-btn text-indigo-200 hover:bg-indigo-800/70 px-3.5 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-1.5">
-                        <span>⚙️</span> Kelimeleri Yönet (<span id="nav-word-count">0</span>)
+                    <button onclick="switchTab('manage')" id="tab-manage" class="nav-btn text-indigo-200 hover:bg-indigo-800/70 px-3.5 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-1.0">
+                        <span></span>DEFTER(<span id="nav-word-count">0</span>)
                     </button>
                 </nav>
             </div>
@@ -101,7 +89,7 @@
                         <select id="fc-level-filter" onchange="applyFlashcardFilters()" class="bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-indigo-500 outline-none">
                             <option value="ALL">Tüm Seviyeler</option>
                             <option value="YDS">YDS Akademik</option>
-                            <option value="YDS-PV">YDS Phrasal Verbs & Bağlaç</option>
+                            <option value="YDS-PV">YDS Bağlaç</option>
                             <option value="A1">A1 Başlangıç</option>
                             <option value="A2">A2 Temel</option>
                             <option value="B1">B1 Orta</option>
@@ -112,8 +100,8 @@
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Öğrenme Durumu</label>
                         <select id="fc-status-filter" onchange="applyFlashcardFilters()" class="bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-xl px-3 py-2 font-medium focus:ring-2 focus:ring-indigo-500 outline-none">
                             <option value="ALL">Tümü</option>
-                            <option value="new">🔄 Öğrenilecek / Yeni</option>
-                            <option value="hard">⭐ Zorlanılan Kelimeler</option>
+                            <option value="new">🔄 Öğrenilecek</option>
+                            <option value="hard">⭐ Zor</option>
                             <option value="learned">✅ Öğrendiklerim</option>
                         </select>
                     </div>
@@ -1891,26 +1879,61 @@
             showToast("JSON yedeği indirildi.");
         }
 
-        function importWordsJSON(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const imported = JSON.parse(e.target.result);
-                    if (Array.isArray(imported)) {
-                        words = imported;
-                        saveWordsToStorage();
-                        renderManagementTable();
-                        applyFlashcardFilters();
-                        showToast(`${imported.length} kelime başarıyla içe aktarıldı!`);
+function importWordsJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const imported = JSON.parse(e.target.result);
+            if (Array.isArray(imported)) {
+                // Mevcut en büyük ID'yi buluyoruz ki ID çakışması olmasın
+                let baseId = words.length > 0 ? Math.max(...words.map(w => w.id)) + 1 : 1;
+                
+                // Aynı kelime ve seviyenin tekrar eklenmesini önlemek için set oluşturuyoruz
+                const existingKeys = new Set(words.map(w => `${w.en.toLowerCase()}_${w.level}`));
+                let addedCount = 0;
+
+                imported.forEach(item => {
+                    const en = item.en || "";
+                    const level = item.level || "YDS";
+                    const key = `${en.toLowerCase()}_${level}`;
+
+                    // Eğer bu kelime listede yoksa ekle
+                    if (!existingKeys.has(key) && en) {
+                        words.push({
+                            id: baseId++,
+                            en: en,
+                            tr: item.tr || [],
+                            syn: item.syn || [],
+                            ant: item.ant || [],
+                            level: level,
+                            status: item.status || 'new'
+                        });
+                        existingKeys.add(key);
+                        addedCount++;
                     }
-                } catch (err) {
-                    showToast("Geçersiz JSON dosyası!", "warning");
+                });
+
+                saveWordsToStorage();
+                renderManagementTable();
+                applyFlashcardFilters();
+                
+                // Dosya inputunu sıfırlıyoruz ki aynı dosya tekrar seçilebilsin
+                document.getElementById('json-import-input').value = ''; 
+
+                if (addedCount > 0) {
+                    showToast(`İçe aktarım başarılı: ${addedCount} yeni kelime eklendi! (Toplam: ${words.length})`);
+                } else {
+                    showToast(`Yüklediğiniz dosyadaki kelimelerin tümü zaten listenizde mevcut!`, 'warning');
                 }
-            };
-            reader.readAsText(file);
+            }
+        } catch (err) {
+            showToast("Geçersiz JSON dosyası!", "warning");
         }
+    };
+    reader.readAsText(file);
+}
 
         window.onload = initApp;
     </script>
